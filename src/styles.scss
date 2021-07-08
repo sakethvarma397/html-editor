@@ -1,0 +1,86 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:200i,300,400&display=swap";
+
+:root {
+  --color-blue: #1b78ca;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  font-size: 1.5rem;
+  text-align: center;
+  height: 100vh;
+  h1 {
+    font-family: "Poppins", sans-serif;
+  }
+}
+
+@media (max-width: 20em) {
+  .main-container {
+    font-size: 1rem;
+    margin-bottom: 2px;
+    h1 {
+      font-size: 0.2rem;
+    }
+  }
+  .toolstrip {
+    justify-content: center;
+
+    button {
+      margin: 0 1rem;
+    }
+  }
+}
+
+.toolstrip {
+  width: 100%;
+  height: auto;
+  background-color: var(--color-blue);
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    display: block;
+    margin: auto 0.5rem;
+    background-color: #9fd0fa;
+    border-style: none;
+    border-radius: 2px;
+  }
+}
+
+.playground {
+  display: grid;
+  column-gap: 15px;
+  padding: 0 5px;
+  height: 90%;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-areas: "editor preview";
+
+  .editor {
+    grid-area: editor;
+    box-shadow: (0 0.5px 2px black);
+  }
+  .preview {
+    grid-area: preview;
+    background-color: whitesmoke;
+
+    iframe {
+      border: none;
+      box-shadow: (0 0.5px 3px black);
+    }
+  }
+}
+
+@media (max-width: 30em) {
+  .playground {
+    grid-template-areas:
+      "editor"
+      "preview";
+  }
+}
