@@ -1,13 +1,17 @@
 import React, { useRef, useState } from "react";
-import Editor from "./Editor";
-import Toolstrip from "./Toolstrip";
+import Editor from "./components/Editor";
+import Toolstrip from "./components/Toolstrip";
 import ReactDOM from "react-dom";
-import Preview from "./Preview";
+import Preview from "./components/Preview";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./components/globalStyles";
+import { lightTheme, darkTheme } from "./Theme";
+import useDarkMode from "./hooks/useDarkMode";
 
 const App = () => {
   const ref = useRef("aceEditor");
   const [value, setValue] = useState("");
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useDarkMode();
   const code = useRef("");
 
   const updateCode = (newCode) => {
@@ -41,35 +45,31 @@ const App = () => {
   const changeTheme = () => {
     setTheme(theme === "light" ? "Dark" : "light");
   };
-
   return (
-    //TODO: Bad styling. Need to use global stylesheets
-    <div
-      className="main-container"
-      style={
-        theme === "light"
-          ? { backgroundColor: "white" }
-          : { backgroundColor: "#09467B" }
-      }
-    >
-      <h1 style={theme === "light" ? { color: "black" } : { color: "#9fd0fa" }}>
-        Happy coding!
-      </h1>
-      <Toolstrip
-        executeCode={executeCode}
-        resetCode={resetCode}
-        save={handleSaveToPC}
-        changeTheme={changeTheme}
-      />
-      <div className="playground">
-        <div className="editor">
-          <Editor initialValue={value} theme={theme} updateCode={updateCode} />
-        </div>
-        <div className="preview">
-          <Preview ref={ref} />
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      <div className="main-container">
+        <h1>Happy coding!</h1>
+        <Toolstrip
+          executeCode={executeCode}
+          resetCode={resetCode}
+          save={handleSaveToPC}
+          changeTheme={changeTheme}
+        />
+        <div className="playground">
+          <div className="editor">
+            <Editor
+              initialValue={value}
+              theme={theme}
+              updateCode={updateCode}
+            />
+          </div>
+          <div className="preview">
+            <Preview ref={ref} />
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 
